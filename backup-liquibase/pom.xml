@@ -6,7 +6,7 @@
     <parent>
         <groupId>vassio.od.ua</groupId>
         <artifactId>backup-base</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <groupId>vassio.od.ua</groupId>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>${spring}</version>
+            <version>${org.springframework}</version>
         </dependency>
 
     </dependencies>
