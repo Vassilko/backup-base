@@ -1,0 +1,4 @@
+/home/vassio/git/backup-base/backup-liquibase/src/main/java/ua/od/vassio/backup/liquibase/database/LiquibaseWorkDatabaseImpl.java
+/home/vassio/git/backup-base/backup-liquibase/src/main/java/ua/od/vassio/backup/liquibase/database/LiquibaseWorkDatabase.java
+/home/vassio/git/backup-base/backup-liquibase/src/main/java/ua/od/vassio/backup/liquibase/LiquibaseStructureSaver.java
+/home/vassio/git/backup-base/backup-liquibase/src/main/java/ua/od/vassio/backup/liquibase/SpringResourceOpener.java

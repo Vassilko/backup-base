@@ -2,15 +2,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>backup-common</artifactId>
-        <groupId>vassio.od.ua</groupId>
-        <version>1.0.0</version>
-        <relativePath>../backup-common/pom.xml</relativePath>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>vassio.od.ua</groupId>
+        <artifactId>backup-base</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <groupId>vassio.od.ua</groupId>
 
     <artifactId>backup-dropbox</artifactId>
+    <version>${parent.version}</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.dropbox.core</groupId>
+            <artifactId>dropbox-core-sdk</artifactId>
+            <version>${dropbox}</version>
+        </dependency>
 
+        <dependency>
+            <groupId>vassio.od.ua</groupId>
+            <artifactId>backup-liquibase</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

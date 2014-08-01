@@ -1,0 +1,4 @@
+/home/vassio/git/backup-base/backup-common/src/main/java/ua/od/vassio/backup/common/Backup.java
+/home/vassio/git/backup-base/backup-common/src/main/java/ua/od/vassio/backup/common/WorkDatabase.java
+/home/vassio/git/backup-base/backup-common/src/main/java/ua/od/vassio/backup/common/exception/DBException.java
+/home/vassio/git/backup-base/backup-common/src/main/java/ua/od/vassio/backup/common/StructureSaver.java

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.liquibase:liquibase-core:3.3.0-VZAKHARCHENKO">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/liquibase/liquibase-core/3.3.0-VZAKHARCHENKO/liquibase-core-3.3.0-VZAKHARCHENKO.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/liquibase/liquibase-core/3.3.0-VZAKHARCHENKO/liquibase-core-3.3.0-VZAKHARCHENKO-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/liquibase/liquibase-core/3.3.0-VZAKHARCHENKO/liquibase-core-3.3.0-VZAKHARCHENKO-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

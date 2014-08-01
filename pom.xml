@@ -17,6 +17,7 @@
 
     <properties>
         <liquibase>3.3.0-VZAKHARCHENKO</liquibase>
+        <dropbox>1.7.6</dropbox>
     </properties>
 
     <modules>
@@ -54,6 +55,16 @@
             <artifactId>commons-collections4</artifactId>
             <version>${commons-collections}</version>
         </dependency>
-
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
