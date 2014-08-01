@@ -16,7 +16,7 @@ import static org.testng.Assert.assertNotNull;
  * Time: 12:31
  */
 public class DropBoxResourceOpenerTest {
-    DropBoxResourceOpener dropBoxResourceOpener=new DropBoxResourceOpener();
+    DropBoxResourceOpener dropBoxResourceOpener=new DropBoxResourceOpener("backup-base-test2");
            final String APP_KEY = "kuebk1pz38bbg75";
         final String APP_SECRET = "dp3u216fym0wsgz";
 
@@ -24,7 +24,7 @@ public class DropBoxResourceOpenerTest {
     public void initDropBoxResourceOpener(){
         dropBoxResourceOpener.setApp_key(APP_KEY);
         dropBoxResourceOpener.setApp_secret(APP_SECRET);
-        dropBoxResourceOpener.setAuthorizationCode("");
+        dropBoxResourceOpener.setAccessToken("EtOGckaNVbQAAAAAAAAAvAA7cf8x-3aWvhIJO-IHeIA9Xu49pR4tliFrwxBnAJue");
         dropBoxResourceOpener.init();
     }
     @Test
@@ -32,6 +32,6 @@ public class DropBoxResourceOpenerTest {
         Set<String> strings= dropBoxResourceOpener.list("", "", false, false, false);
          assertNotNull(strings);
         assertEquals(strings.size(),1);
-        assertEquals(strings.iterator().next(),"");
+        assertEquals(strings.iterator().next(),"/test.xml");
     }
 }

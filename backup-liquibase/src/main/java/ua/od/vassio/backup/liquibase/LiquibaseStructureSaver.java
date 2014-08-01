@@ -40,12 +40,32 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
 
     private WorkDatabase<Database> workDatabase;
     private Liquibase liquibase;
-
+    protected DatabaseChangeLogReader changeLogReader;
 
     public LiquibaseStructureSaver(Connection connection) throws DBException {
         workDatabase=new LiquibaseWorkDatabaseImpl(connection);
         liquibase = new Liquibase(getDatabaseChangeLog(), getResourceAccessor(), workDatabase.getCurrentDatabase());
+        changeLogReader=new DatabaseChangeLogReaderImpl(getResourceAccessor(),workDatabase.getCurrentDatabase());
     }
+
+    protected void initDatabaseChangeLog(DatabaseChangeLog databaseChangeLog) throws DBException {
+        try {
+            databaseChangeLog.getChangeSets().clear();
+            databaseChangeLog.getPreconditions().getNestedPreconditions().clear();
+            changeLogReader.read(databaseChangeLog, pathToChangeSets(), new StringComparator());
+            updateChangeSets(databaseChangeLog.getChangeSets());
+        } catch (Exception e) {
+            throw new DBException(e);
+        }
+    }
+
+    protected DatabaseChangeLog getDatabaseChangeLog() throws DBException{
+        DatabaseChangeLog databaseChangeLog = new DatabaseChangeLog();
+        initDatabaseChangeLog(databaseChangeLog);
+        return databaseChangeLog;
+    };
+
+    protected abstract String pathToChangeSets();
 
     protected Set<Class<? extends DatabaseObject>> getCompareTypes() {
         Set<Class<? extends DatabaseObject>> compareTypes=new HashSet<Class<? extends DatabaseObject>>();
@@ -100,8 +120,6 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
 
     protected abstract String getIdPrefix();
 
-
-    protected abstract DatabaseChangeLog getDatabaseChangeLog();
 
     protected abstract ResourceAccessor getResourceAccessor();
 
