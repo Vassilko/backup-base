@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>backup-base</artifactId>
+        <groupId>vassio.od.ua</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>backup-execute</artifactId>
+
+     <profiles>
+         <profile>
+             <id>mysql</id>
+             <dependencies>
+                 <dependency>
+                     <groupId>mysql</groupId>
+                     <artifactId>mysql-connector-java</artifactId>
+                     <version>${mysql}</version>
+                 </dependency>
+             </dependencies>
+         </profile>
+         <profile>
+             <id>dropbox</id>
+             <dependencies>
+                 <dependency>
+                     <groupId>vassio.od.ua</groupId>
+                     <artifactId>backup-dropbox</artifactId>
+                     <version>${project.version}</version>
+                 </dependency>
+             </dependencies>
+
+             <build>
+                 <plugins>
+
+                     <plugin>
+                         <groupId>org.apache.maven.plugins</groupId>
+                         <artifactId>maven-jar-plugin</artifactId>
+                         <version>${maven-jar-plugin}</version>
+                         <inherited>true</inherited>
+                         <configuration>
+                             <archive>
+                                 <manifest>
+                                     <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                     <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                                     <mainClass>ua.od.vassio.olganos.client.Main</mainClass>
+                                 </manifest>
+                             </archive>
+                         </configuration>
+                     </plugin>
+
+                     <plugin>
+                         <groupId>org.dstovall</groupId>
+                         <artifactId>onejar-maven-plugin</artifactId>
+                         <version>${onejar}</version>
+                         <executions>
+                             <execution>
+                                 <configuration>
+                                     <onejarVersion>0.97</onejarVersion>
+                                     <attachToBuild>true</attachToBuild>
+                                     <classifier>onejar</classifier>
+                                     <filename>${groupId}.jar</filename>
+                                 </configuration>
+                                 <phase>package</phase>
+                                 <goals>
+                                     <goal>one-jar</goal>
+                                 </goals>
+                             </execution>
+                         </executions>
+                     </plugin>
+                 </plugins>
+             </build>
+         </profile>
+     </profiles>
+</project>

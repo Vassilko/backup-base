@@ -26,5 +26,16 @@
             <artifactId>backup-liquibase</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>vassio.od.ua</groupId>
+            <artifactId>backup-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql}</version>
+            <!--<scope>test</scope>-->
+        </dependency>
     </dependencies>
 </project>

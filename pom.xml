@@ -23,6 +23,8 @@
     <modules>
         <module>backup-common</module>
         <module>backup-liquibase</module>
+        <module>backup-dropbox</module>
+        <module>backup-execute</module>
     </modules>
 
     <repositories>

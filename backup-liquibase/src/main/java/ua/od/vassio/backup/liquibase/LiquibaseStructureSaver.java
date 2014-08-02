@@ -21,9 +21,12 @@ import org.apache.commons.lang3.StringUtils;
 import ua.od.vassio.backup.common.StructureSaver;
 import ua.od.vassio.backup.common.WorkDatabase;
 import ua.od.vassio.backup.common.exception.DBException;
+import ua.od.vassio.backup.common.exception.DropAllException;
+import ua.od.vassio.backup.common.exception.UpdateException;
+import ua.od.vassio.backup.common.exception.UploadException;
 import ua.od.vassio.backup.liquibase.database.LiquibaseWorkDatabaseImpl;
 
-import java.io.OutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.sql.Connection;
 import java.util.Collection;
@@ -36,39 +39,45 @@ import java.util.Set;
  */
 public abstract class LiquibaseStructureSaver implements StructureSaver {
     protected final static String CONTEXT_NAME = null;
-    protected final static String AUTHOR_NAME = "eclm (generate)";
+    protected final static String AUTHOR_NAME = "vassio (generate)";
 
-    private WorkDatabase<Database> workDatabase;
-    private Liquibase liquibase;
+    protected WorkDatabase<Database> workDatabase;
+    protected Liquibase liquibase;
     protected DatabaseChangeLogReader changeLogReader;
 
     public LiquibaseStructureSaver(Connection connection) throws DBException {
-        workDatabase=new LiquibaseWorkDatabaseImpl(connection);
-        liquibase = new Liquibase(getDatabaseChangeLog(), getResourceAccessor(), workDatabase.getCurrentDatabase());
-        changeLogReader=new DatabaseChangeLogReaderImpl(getResourceAccessor(),workDatabase.getCurrentDatabase());
+        workDatabase = new LiquibaseWorkDatabaseImpl(connection);
     }
 
-    protected void initDatabaseChangeLog(DatabaseChangeLog databaseChangeLog) throws DBException {
+    public void init() throws DBException {
+        changeLogReader = new DatabaseChangeLogReaderImpl(getResourceAccessor(), workDatabase.getCurrentDatabase());
+        liquibase = new Liquibase(getDatabaseChangeLog(), getResourceAccessor(), workDatabase.getCurrentDatabase());
+    }
+
+    protected void initDatabaseChangeLog(DatabaseChangeLog databaseChangeLog,String fileName) throws DBException {
         try {
             databaseChangeLog.getChangeSets().clear();
             databaseChangeLog.getPreconditions().getNestedPreconditions().clear();
-            changeLogReader.read(databaseChangeLog, pathToChangeSets(), new StringComparator());
+            changeLogReader.read(databaseChangeLog,pathToChangeSets()+ fileName, new StringComparator());
             updateChangeSets(databaseChangeLog.getChangeSets());
         } catch (Exception e) {
             throw new DBException(e);
         }
     }
 
-    protected DatabaseChangeLog getDatabaseChangeLog() throws DBException{
+
+
+    protected DatabaseChangeLog getDatabaseChangeLog() throws DBException {
         DatabaseChangeLog databaseChangeLog = new DatabaseChangeLog();
-        initDatabaseChangeLog(databaseChangeLog);
         return databaseChangeLog;
-    };
+    }
+
+    ;
 
     protected abstract String pathToChangeSets();
 
     protected Set<Class<? extends DatabaseObject>> getCompareTypes() {
-        Set<Class<? extends DatabaseObject>> compareTypes=new HashSet<Class<? extends DatabaseObject>>();
+        Set<Class<? extends DatabaseObject>> compareTypes = new HashSet<Class<? extends DatabaseObject>>();
         compareTypes.add(Table.class);
         compareTypes.add(PrimaryKey.class);
         compareTypes.add(ForeignKey.class);
@@ -86,13 +95,12 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
     }
 
 
-
     protected DiffOutputControl getDiffOutputControl() {
         return new DiffOutputControl(false, true, true);
     }
 
-    protected DiffToChangeLog getFullDiff() throws  DBException {
-        Database database=workDatabase.getCurrentDatabase();
+    protected DiffToChangeLog getFullDiff() throws DBException {
+        Database database = workDatabase.getCurrentDatabase();
         try {
             DatabaseSnapshot referenceSnapshot = SnapshotGeneratorFactory.getInstance().createSnapshot(database.getDefaultSchema(), database, new SnapshotControl(database, getCompareTypes().toArray(new Class[]{})));
             DiffResult diffResult = DiffGeneratorFactory.getInstance().compare(referenceSnapshot, null, getCompareControl());
@@ -101,21 +109,21 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
             diffToChangeLog.setChangeSetContext(CONTEXT_NAME);
             diffToChangeLog.setIdRoot(getIdPrefix());
             return diffToChangeLog;
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
     protected void updateChangeSets(Collection<ChangeSet> changeSets) {
-        if (CollectionUtils.isNotEmpty(changeSets)){
-            for (ChangeSet changeSet:changeSets){
+        if (CollectionUtils.isNotEmpty(changeSets)) {
+            for (ChangeSet changeSet : changeSets) {
                 updateChangeSet(changeSet);
             }
         }
     }
 
-    protected void  updateChangeSet(ChangeSet changeSet){
-        changeSet.setFilePath(StringUtils.substringAfterLast(changeSet.getFilePath(),"/"));
+    protected void updateChangeSet(ChangeSet changeSet) {
+        changeSet.setFilePath(StringUtils.substringAfterLast(changeSet.getFilePath(), "/"));
     }
 
     protected abstract String getIdPrefix();
@@ -123,33 +131,45 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
 
     protected abstract ResourceAccessor getResourceAccessor();
 
-    protected abstract OutputStream getOutputStream(String changelogId);
+    protected ByteArrayOutputStream getOutputStream() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        return byteArrayOutputStream;
+    }
+
+    public abstract String upload(ByteArrayOutputStream outputStream) throws UploadException;
 
     @Override
-    public void save() throws DBException{
-        DiffToChangeLog diffToChangeLog=getFullDiff();
+    public String save() throws DBException {
+        DiffToChangeLog diffToChangeLog = getFullDiff();
         try {
-            List<ChangeSet>  changeSets=diffToChangeLog.generateChangeSets();
+            List<ChangeSet> changeSets = diffToChangeLog.generateChangeSets();
             updateChangeSets(changeSets);
-            diffToChangeLog.print(new PrintStream(getOutputStream(diffToChangeLog.getChangeSetPath())),
+            ByteArrayOutputStream outputStream = getOutputStream();
+            diffToChangeLog.print(new PrintStream(outputStream),
                     new XMLChangeLogSerializer(),
                     changeSets);
+            return upload(outputStream);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void update() throws DBException {
+    public void update(String fileName) throws UpdateException {
         try {
+            initDatabaseChangeLog(liquibase.getDatabaseChangeLog(),fileName);
             liquibase.update(CONTEXT_NAME);
         } catch (Exception e) {
-            throw new DBException(e);
+            throw new UpdateException(e);
         }
     }
 
     @Override
-    public void deploy() {
-
+    public void dropAll() throws DropAllException {
+        try {
+            liquibase.dropAll();
+        } catch (Exception e) {
+            throw new DropAllException(e);
+        }
     }
 }
