@@ -45,7 +45,7 @@
                                  <manifest>
                                      <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                                      <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                                     <mainClass>ua.od.vassio.olganos.client.Main</mainClass>
+                                     <mainClass>ua.od.vassio.backup.dropbox.main.DropboxMain</mainClass>
                                  </manifest>
                              </archive>
                          </configuration>
@@ -61,7 +61,7 @@
                                      <onejarVersion>0.97</onejarVersion>
                                      <attachToBuild>true</attachToBuild>
                                      <classifier>onejar</classifier>
-                                     <filename>${groupId}.jar</filename>
+                                     <filename>dropbox.jar</filename>
                                  </configuration>
                                  <phase>package</phase>
                                  <goals>

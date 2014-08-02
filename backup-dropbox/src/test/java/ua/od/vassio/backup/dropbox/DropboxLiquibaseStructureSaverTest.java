@@ -33,12 +33,12 @@ public class DropboxLiquibaseStructureSaverTest {
         dropboxLiquibaseStructureSaver.dropAll();
     }
 
-    @Test
+    @Test(enabled = false)
     public void testSaveData() throws DBException, SQLException {
         dropboxLiquibaseStructureSaver.save();
     }
 
-    @Test
+    @Test(enabled = false)
     public void testLoadData() throws DBException, SQLException, IOException, UploadException, UpdateException {
         DropBoxResourceOpener dropBoxResourceOpener=dropboxLiquibaseStructureSaver.getDropBoxResourceOpener();
         String fileName="DropBox_messager_02082014_132603.xml";
