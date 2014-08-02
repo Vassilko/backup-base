@@ -23,7 +23,7 @@ public class DropBoxResourceOpenerTest {
 
     private DropBoxResourceOpener dropBoxResourceOpener = new DropBoxResourceOpener(APP_NAME,APP_KEY,APP_SECRET,ACCESS_TOKEN);
 
-    @Test
+    @Test(enabled = false)
     public void testReadFile() throws IOException {
         Set<String> strings = dropBoxResourceOpener.list("", "", false, false, false);
         assertNotNull(strings);
