@@ -18,6 +18,7 @@ import java.sql.SQLException;
  * Time: 15:39
  */
 public class DropboxMain {
+
     private static String APP_NAME=DropboxMain.class.getSimpleName();
     public static void main(String args[]) throws Exception {
         CommandLine commandLine=ArgumentsHelper.getCommandLine(args,DropboxArgumentAction.class);

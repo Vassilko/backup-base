@@ -68,5 +68,10 @@
             <version>${testng}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>ua.od.vassio</groupId>
+            <artifactId>jaxrslog</artifactId>
+            <version>${jaxrslog}</version>
+        </dependency>
     </dependencies>
 </project>

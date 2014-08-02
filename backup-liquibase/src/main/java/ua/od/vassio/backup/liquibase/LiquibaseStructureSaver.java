@@ -18,6 +18,8 @@ import liquibase.structure.DatabaseObject;
 import liquibase.structure.core.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.od.vassio.backup.common.StructureSaver;
 import ua.od.vassio.backup.common.WorkDatabase;
 import ua.od.vassio.backup.common.exception.DBException;
@@ -38,6 +40,7 @@ import java.util.Set;
  * Created by vzakharchenko on 24.07.14.
  */
 public abstract class LiquibaseStructureSaver implements StructureSaver {
+    private static Logger logger= LoggerFactory.getLogger(LiquibaseStructureSaver.class);
     protected final static String CONTEXT_NAME = null;
     protected final static String AUTHOR_NAME = "vassio (generate)";
 
@@ -50,12 +53,15 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
     }
 
     public void init() throws DBException {
+        logger.info("init LiquibaseStructureSaver");
         changeLogReader = new DatabaseChangeLogReaderImpl(getResourceAccessor(), workDatabase.getCurrentDatabase());
         liquibase = new Liquibase(getDatabaseChangeLog(), getResourceAccessor(), workDatabase.getCurrentDatabase());
+        logger.info("init LiquibaseStructureSaver Success");
     }
 
     protected void initDatabaseChangeLog(DatabaseChangeLog databaseChangeLog,String fileName) throws DBException {
         try {
+            logger.info("read "+fileName);
             databaseChangeLog.getChangeSets().clear();
             databaseChangeLog.getPreconditions().getNestedPreconditions().clear();
             changeLogReader.read(databaseChangeLog,pathToChangeSets()+ fileName, new StringComparator());
@@ -100,6 +106,7 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
     }
 
     protected DiffToChangeLog getFullDiff() throws DBException {
+        logger.info("get Full diff");
         Database database = workDatabase.getCurrentDatabase();
         try {
             DatabaseSnapshot referenceSnapshot = SnapshotGeneratorFactory.getInstance().createSnapshot(database.getDefaultSchema(), database, new SnapshotControl(database, getCompareTypes().toArray(new Class[]{})));
@@ -140,6 +147,7 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
 
     @Override
     public String save() throws DBException {
+        logger.info("Start Save file");
         DiffToChangeLog diffToChangeLog = getFullDiff();
         try {
             List<ChangeSet> changeSets = diffToChangeLog.generateChangeSets();
@@ -157,6 +165,7 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
     @Override
     public void update(String fileName) throws UpdateException {
         try {
+            logger.info("Start update file: "+fileName);
             initDatabaseChangeLog(liquibase.getDatabaseChangeLog(),fileName);
             liquibase.update(CONTEXT_NAME);
         } catch (Exception e) {
@@ -167,6 +176,7 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
     @Override
     public void dropAll() throws DropAllException {
         try {
+            logger.info("Start dropAll");
             liquibase.dropAll();
         } catch (Exception e) {
             throw new DropAllException(e);

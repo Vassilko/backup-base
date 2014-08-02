@@ -1,6 +1,8 @@
 package ua.od.vassio.backup.dropbox;
 
 import liquibase.resource.ResourceAccessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.od.vassio.backup.common.exception.ClearException;
 import ua.od.vassio.backup.common.exception.DBException;
 import ua.od.vassio.backup.common.exception.UploadException;
@@ -17,7 +19,7 @@ import java.util.Date;
  * Created by vzakharchenko on 01.08.14.
  */
 public class DropboxLiquibaseStructureSaver extends LiquibaseStructureSaver {
-
+    private static Logger logger= LoggerFactory.getLogger(DropboxLiquibaseStructureSaver.class);
     private String defaultPath="/";
 
     private String prefix="DropBox_";
@@ -66,6 +68,7 @@ public class DropboxLiquibaseStructureSaver extends LiquibaseStructureSaver {
       InputStream inputStream=new ByteArrayInputStream(outputStream.toByteArray());
         String fileName=generateFileName();
         dropBoxResourceOpener.upload(pathToChangeSets()+fileName,inputStream);
+        logger.info("upload "+fileName+ " Success");
         return fileName;
     }
 
