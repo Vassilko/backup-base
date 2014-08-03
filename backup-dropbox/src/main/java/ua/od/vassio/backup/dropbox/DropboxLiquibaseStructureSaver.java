@@ -65,7 +65,7 @@ public class DropboxLiquibaseStructureSaver extends LiquibaseStructureSaver {
 
     @Override
     public String upload(ByteArrayOutputStream outputStream) throws UploadException {
-      InputStream inputStream=new ByteArrayInputStream(outputStream.toByteArray());
+        InputStream inputStream=new ByteArrayInputStream(outputStream.toByteArray());
         String fileName=generateFileName();
         dropBoxResourceOpener.upload(pathToChangeSets()+fileName,inputStream);
         logger.info("upload "+fileName+ " Success");

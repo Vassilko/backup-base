@@ -18,6 +18,7 @@
     <properties>
         <liquibase>3.3.0-VZAKHARCHENKO</liquibase>
         <dropbox>1.7.6</dropbox>
+        <maven-assembly-plugin>2.4</maven-assembly-plugin>
     </properties>
 
     <modules>

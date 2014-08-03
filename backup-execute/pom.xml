@@ -52,23 +52,28 @@
                      </plugin>
 
                      <plugin>
-                         <groupId>org.dstovall</groupId>
-                         <artifactId>onejar-maven-plugin</artifactId>
-                         <version>${onejar}</version>
+                         <version>${maven-assembly-plugin}</version>
+                         <artifactId>maven-assembly-plugin</artifactId>
                          <executions>
                              <execution>
-                                 <configuration>
-                                     <onejarVersion>0.97</onejarVersion>
-                                     <attachToBuild>true</attachToBuild>
-                                     <classifier>onejar</classifier>
-                                     <filename>dropbox.jar</filename>
-                                 </configuration>
                                  <phase>package</phase>
                                  <goals>
-                                     <goal>one-jar</goal>
+                                     <goal>single</goal>
                                  </goals>
                              </execution>
                          </executions>
+                         <configuration>
+                             <descriptorRefs>
+                                 <descriptorRef>jar-with-dependencies</descriptorRef>
+                             </descriptorRefs>
+                             <archive>
+                                 <manifest>
+                                     <mainClass>ua.od.vassio.backup.dropbox.main.DropboxMain</mainClass>
+                                 </manifest>
+                             </archive>
+                             <finalName>dropbox</finalName>
+                             <appendAssemblyId>false</appendAssemblyId>
+                         </configuration>
                      </plugin>
                  </plugins>
              </build>
