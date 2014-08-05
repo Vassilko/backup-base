@@ -19,6 +19,7 @@
         <liquibase>3.3.0-VZAKHARCHENKO</liquibase>
         <dropbox>1.7.6</dropbox>
         <maven-assembly-plugin>2.4</maven-assembly-plugin>
+        <sqlite>3.7.2</sqlite>
     </properties>
 
     <modules>

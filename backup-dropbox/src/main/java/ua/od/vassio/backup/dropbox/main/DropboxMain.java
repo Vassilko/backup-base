@@ -64,6 +64,10 @@ public class DropboxMain {
             appName= APP_NAME;
         }
 
+        String jdbcDriver=ArgumentsHelper.getArgument(args,DropboxArgumentAction.DRIVER,commandLine,String.class);
+         if (StringUtils.isNotEmpty(jdbcDriver)){
+             Class.forName(jdbcDriver);
+         }
         //getConnection
         logger.info("getConnection");
         Connection connection=getConnection(connectionString);
@@ -71,6 +75,11 @@ public class DropboxMain {
         logger.info("init logic");
         DropboxLiquibaseStructureSaver dropboxLiquibaseStructureSaver=new DropboxLiquibaseStructureSaver(connection,appName,accessToken);
         dropboxLiquibaseStructureSaver.init();
+
+        if (ArgumentsHelper.getArgumentWithOutArgument(args,DropboxArgumentAction.DROP,commandLine)&&dropBoxAction==DropBoxAction.UPDATE){
+            dropboxLiquibaseStructureSaver.dropAll();
+        }
+
         //start logic
         logger.info("start logic "+dropBoxAction);
         if (dropBoxAction==DropBoxAction.SAVE){

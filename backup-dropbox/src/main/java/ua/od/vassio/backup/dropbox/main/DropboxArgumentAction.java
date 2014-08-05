@@ -13,7 +13,10 @@ public enum DropboxArgumentAction implements EnumInterface {
     ACCESS_TOKEN("accessToken","access token can be used to access dropbox accoun via the API",true),
     APP_NAME("appName","dropbox application name",true),
     ACTION("action","action must be \n"+DropBoxAction.getDescriptions(),true),
-    FILENAME("fileName","uses with UPDATE",true);
+    FILENAME("fileName","uses with UPDATE",true),
+    DROP("dropBase","drop DataBase before UPDATE",false),
+    DRIVER("jdbcDriver","init jdbc driver",true);
+
     private String name;
     private String description;
     private boolean hasArgs;
