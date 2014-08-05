@@ -42,7 +42,7 @@ import java.util.Set;
 public abstract class LiquibaseStructureSaver implements StructureSaver {
     private static Logger logger= LoggerFactory.getLogger(LiquibaseStructureSaver.class);
     protected final static String CONTEXT_NAME = null;
-    protected final static String AUTHOR_NAME = "vassio (generate)";
+    protected final static String AUTHOR_NAME = System.getProperty("user.name")+"(generate)";
 
     protected WorkDatabase<Database> workDatabase;
     protected Liquibase liquibase;
