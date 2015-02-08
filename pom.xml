@@ -31,22 +31,10 @@
 
     <repositories>
         <repository>
-            <id>releases</id>
-            <url>http://vassio.od.ua:9000/nexus/content/repositories/releases</url>
-        </repository>
-        <repository>
             <id>jenkins</id>
             <url>http://vassio.od.ua:9000/nexus/content/repositories/jenkins</url>
         </repository>
-
     </repositories>
-
-    <distributionManagement>
-        <repository>
-            <id>jenkins</id>
-            <url>http://vassio.od.ua:9000/nexus/content/repositories/jenkins</url>
-        </repository>
-    </distributionManagement>
 
     <dependencies>
         <dependency>
