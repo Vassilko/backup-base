@@ -1,5 +1,7 @@
 package ua.od.vassio.backup.dropbox.main;
 
+import java.util.Objects;
+
 /**
  * Created with IntelliJ IDEA.
  * User: vassio
@@ -12,16 +14,16 @@ public enum DropBoxAction {
     DROP("drop","dropAll objects in database"),
     CLEAR("clear","clear all ChangeSets");
 
-    private String name;
+    private String internalName;
     private String description;
 
-    DropBoxAction(String name, String description) {
-        this.name = name;
+    DropBoxAction(String internalName, String description) {
+        this.internalName = internalName;
         this.description = description;
     }
 
-    public String getName() {
-        return name;
+    public String getInternalName() {
+        return internalName;
     }
 
     public String getDescription() {
@@ -31,8 +33,20 @@ public enum DropBoxAction {
     public static  String getDescriptions(){
         String ret="";
         for (DropBoxAction dropBoxAction:DropBoxAction.values()){
-           ret+=dropBoxAction.getName()+":  "+dropBoxAction.getDescription()+"\n";
+           ret+=dropBoxAction.getInternalName()+":  "+dropBoxAction.getDescription()+"\n";
         }
         return ret;
+    }
+
+    public static DropBoxAction getValue(String text){
+        for (DropBoxAction dropBoxAction : values()) {
+            if (Objects.equals(dropBoxAction.name(),text)){
+                return dropBoxAction;
+            }
+            if (Objects.equals(dropBoxAction.getInternalName(),text)){
+                return dropBoxAction;
+            }
+        }
+        return null;
     }
 }

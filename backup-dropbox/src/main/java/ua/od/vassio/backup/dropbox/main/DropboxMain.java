@@ -2,7 +2,6 @@ package ua.od.vassio.backup.dropbox.main;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +32,7 @@ public class DropboxMain {
         String accessToken = ArgumentsHelper.getArgument(args, DropboxArgumentAction.ACCESS_TOKEN, commandLine, String.class);
         String appName = ArgumentsHelper.getArgument(args, DropboxArgumentAction.APP_NAME, commandLine, String.class);
         String dropBoxActionString = ArgumentsHelper.getArgument(args, DropboxArgumentAction.ACTION, commandLine, String.class);
-        DropBoxAction dropBoxAction = EnumUtils.getEnum(DropBoxAction.class, dropBoxActionString);
+        DropBoxAction dropBoxAction = DropBoxAction.getValue(dropBoxActionString);
         String fileName = ArgumentsHelper.getArgument(args, DropboxArgumentAction.FILENAME, commandLine, String.class);
 
         logger.info("validate parameters");
