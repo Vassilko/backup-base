@@ -29,7 +29,6 @@ import ua.od.vassio.backup.common.exception.UploadException;
 import ua.od.vassio.backup.liquibase.database.LiquibaseWorkDatabaseImpl;
 
 import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.HashSet;
@@ -153,9 +152,8 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
             List<ChangeSet> changeSets = diffToChangeLog.generateChangeSets();
             updateChangeSets(changeSets);
             ByteArrayOutputStream outputStream = getOutputStream();
-            diffToChangeLog.print(new PrintStream(outputStream),
-                    new XMLChangeLogSerializer(),
-                    changeSets);
+            new XMLChangeLogSerializer().write(changeSets, outputStream);
+            outputStream.flush();
             return upload(outputStream);
         } catch (Exception e) {
             throw new RuntimeException(e);
