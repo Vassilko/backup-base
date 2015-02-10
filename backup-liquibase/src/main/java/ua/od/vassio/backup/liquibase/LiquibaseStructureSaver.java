@@ -39,9 +39,9 @@ import java.util.Set;
  * Created by vzakharchenko on 24.07.14.
  */
 public abstract class LiquibaseStructureSaver implements StructureSaver {
-    private static Logger logger= LoggerFactory.getLogger(LiquibaseStructureSaver.class);
+    private static Logger logger = LoggerFactory.getLogger(LiquibaseStructureSaver.class);
     protected final static String CONTEXT_NAME = null;
-    protected final static String AUTHOR_NAME = System.getProperty("user.name")+"(generate)";
+    protected final static String AUTHOR_NAME = System.getProperty("user.name") + "(generate)";
 
     protected WorkDatabase<Database> workDatabase;
     protected Liquibase liquibase;
@@ -58,18 +58,19 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
         logger.info("init LiquibaseStructureSaver Success");
     }
 
-    protected void initDatabaseChangeLog(DatabaseChangeLog databaseChangeLog,String fileName) throws DBException {
+    protected void initDatabaseChangeLog(DatabaseChangeLog databaseChangeLog, String fileName) throws DBException {
         try {
-            logger.info("read "+fileName);
+            logger.info("read " + fileName);
             databaseChangeLog.getChangeSets().clear();
             databaseChangeLog.getPreconditions().getNestedPreconditions().clear();
-            changeLogReader.read(databaseChangeLog,pathToChangeSets()+ fileName, new StringComparator());
+            changeLogReader.read(databaseChangeLog, pathToChangeSets() + fileName, new StringComparator());
             updateChangeSets(databaseChangeLog.getChangeSets());
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             throw new DBException(e);
         }
     }
-
 
 
     protected DatabaseChangeLog getDatabaseChangeLog() throws DBException {
@@ -108,13 +109,15 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
         logger.info("get Full diff");
         Database database = workDatabase.getCurrentDatabase();
         try {
-            DatabaseSnapshot referenceSnapshot = SnapshotGeneratorFactory.getInstance().createSnapshot(database.getDefaultSchema(), database, new SnapshotControl(database, getCompareTypes().toArray(new Class[]{})));
+            DatabaseSnapshot referenceSnapshot = SnapshotGeneratorFactory.getInstance().createSnapshot(database.getDefaultSchema(), database, new SnapshotControl(database, getCompareTypes().toArray(new Class[getCompareTypes().size()])));
             DiffResult diffResult = DiffGeneratorFactory.getInstance().compare(referenceSnapshot, null, getCompareControl());
             DiffToChangeLog diffToChangeLog = new DiffToChangeLog(diffResult, getDiffOutputControl());
             diffToChangeLog.setChangeSetAuthor(AUTHOR_NAME);
             diffToChangeLog.setChangeSetContext(CONTEXT_NAME);
             diffToChangeLog.setIdRoot(getIdPrefix());
             return diffToChangeLog;
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -163,9 +166,11 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
     @Override
     public void update(String fileName) throws UpdateException {
         try {
-            logger.info("Start update file: "+fileName);
-            initDatabaseChangeLog(liquibase.getDatabaseChangeLog(),fileName);
+            logger.info("Start update file: " + fileName);
+            initDatabaseChangeLog(liquibase.getDatabaseChangeLog(), fileName);
             liquibase.update(CONTEXT_NAME);
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             throw new UpdateException(e);
         }
@@ -176,6 +181,8 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
         try {
             logger.info("Start dropAll");
             liquibase.dropAll();
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             throw new DropAllException(e);
         }

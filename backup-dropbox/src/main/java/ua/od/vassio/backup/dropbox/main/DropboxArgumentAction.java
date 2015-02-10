@@ -9,13 +9,13 @@ import ua.od.vassio.common.args.EnumInterface;
  * Time: 15:41
  */
 public enum DropboxArgumentAction implements EnumInterface {
-    CONNECTION_STRING("connection","JDBC Connection String",true),
-    ACCESS_TOKEN("accessToken","access token can be used to access dropbox accoun via the API",true),
-    APP_NAME("appName","dropbox application name",true),
-    ACTION("action","action must be \n"+DropBoxAction.getDescriptions(),true),
-    FILENAME("fileName","uses with UPDATE",true),
-    DROP("dropBase","drop DataBase before UPDATE",false),
-    DRIVER("jdbcDriver","init jdbc driver",true);
+    CONNECTION_STRING("connection", "JDBC Connection String", true),
+    ACCESS_TOKEN("accessToken", "access token can be used to access dropbox accoun via the API", true),
+    APP_NAME("appName", "dropbox application name", true),
+    ACTION("action", "action must be \n" + DropBoxAction.getDescriptions(), true),
+    FILENAME("fileName", "uses with UPDATE", true),
+    DROP("dropBase", "drop DataBase before UPDATE", false),
+    DRIVER("jdbcDriver", "init jdbc driver", true);
 
     private String name;
     private String description;

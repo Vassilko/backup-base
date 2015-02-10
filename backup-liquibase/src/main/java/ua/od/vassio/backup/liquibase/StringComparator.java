@@ -1,11 +1,17 @@
 package ua.od.vassio.backup.liquibase;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.Serializable;
 import java.util.Comparator;
+import java.util.Locale;
 
 /**
  * Created by vzakharchenko on 01.08.14.
  */
-public class StringComparator implements Comparator {
+public class StringComparator implements Comparator,Serializable {
+
+    private static final long serialVersionUID = -7460490007108961174L;
 
     private static StringComparator comparator = new StringComparator();
 
@@ -25,8 +31,8 @@ public class StringComparator implements Comparator {
         } else if (o2 == null) {
             return 1;
         }
-        String stemp1 = o1.toString().toLowerCase();
-        String stemp2 = o2.toString().toLowerCase();
+        String stemp1 = StringUtils.lowerCase(o1.toString(), Locale.getDefault());
+        String stemp2 = StringUtils.lowerCase(o2.toString(), Locale.getDefault());
 
         return stemp1.compareTo(stemp2);
     }

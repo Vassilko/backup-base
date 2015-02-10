@@ -8,8 +8,6 @@ import ua.od.vassio.backup.common.exception.DBException;
 public interface WorkDatabase<DATABASE> {
     /**
      * get Current Database from DataSource. Use cache for resolve
-     *
-     *
      */
     public DATABASE getCurrentDatabase() throws DBException;
 

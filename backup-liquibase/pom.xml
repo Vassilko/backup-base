@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>vassio.od.ua</groupId>
+        <groupId>ua.od.vassio</groupId>
         <artifactId>backup-base</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <groupId>vassio.od.ua</groupId>
+    <groupId>ua.od.vassio</groupId>
     <artifactId>backup-liquibase</artifactId>
     <version>${parent.version}</version>
 
@@ -20,7 +20,7 @@
             <version>${liquibase}</version>
         </dependency>
         <dependency>
-            <groupId>vassio.od.ua</groupId>
+            <groupId>ua.od.vassio</groupId>
             <artifactId>backup-common</artifactId>
             <version>${project.version}</version>
         </dependency>

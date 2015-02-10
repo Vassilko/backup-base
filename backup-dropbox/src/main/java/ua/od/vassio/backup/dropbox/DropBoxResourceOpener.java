@@ -22,10 +22,10 @@ import java.util.Set;
  * Date: 27.07.14
  * Time: 11:37
  */
-public class DropBoxResourceOpener implements ResourceAccessor,ResourceOpenerUpload,ResourceOpenerClear {
+public class DropBoxResourceOpener implements ResourceAccessor, ResourceOpenerUpload, ResourceOpenerClear {
 
-    private String app_key ;
-    private String app_secret;
+//    private String app_key;
+//    private String app_secret;
     private String app_name;
     private String accessToken;
 
@@ -33,13 +33,13 @@ public class DropBoxResourceOpener implements ResourceAccessor,ResourceOpenerUpl
         this.client = client;
     }
 
-    public DropBoxResourceOpener(String app_name, String app_key, String app_secret, String accessToken) {
-        this.app_name = app_name;
-        this.app_key = app_key;
-        this.app_secret = app_secret;
-        this.accessToken = accessToken;
-        init();
-    }
+//    public DropBoxResourceOpener(String app_name, String app_key, String app_secret, String accessToken) {
+//        this.app_name = app_name;
+//        this.app_key = app_key;
+//        this.app_secret = app_secret;
+//        this.accessToken = accessToken;
+//        init();
+//    }
 
     public DropBoxResourceOpener(String app_name, String accessToken) {
         this.app_name = app_name;
@@ -52,50 +52,38 @@ public class DropBoxResourceOpener implements ResourceAccessor,ResourceOpenerUpl
     public void init() {
         DbxRequestConfig config = new DbxRequestConfig(
                 app_name, Locale.getDefault().toString());
-        try{
+        try {
             client = new DbxClient(config, accessToken);
             System.out.println("Linked account: " + client.getAccountInfo().displayName);
-        } catch (Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
 
     }
 
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public void setApp_key(String app_key) {
-        this.app_key = app_key;
-    }
-
-    public void setApp_secret(String app_secret) {
-        this.app_secret = app_secret;
-    }
-
     @Override
     public Set<InputStream> getResourcesAsStream(String path) throws IOException {
-        if (client==null){
+        if (client == null) {
             throw new IllegalAccessError("DropBoxResourceOpener must be init first");
         }
 
-        Set<InputStream> inputStreams=new HashSet<InputStream>();
+        Set<InputStream> inputStreams = new HashSet<InputStream>();
 
-        try{
-            DbxEntry dbxEntry=client.getMetadata(path);
-            if (client.getMetadata(path).isFolder()){
+        try {
+            DbxEntry dbxEntry = client.getMetadata(path);
+            if (client.getMetadata(path).isFolder()) {
                 DbxEntry.WithChildren listing = client.getMetadataWithChildren(path);
                 for (DbxEntry child : listing.children) {
-                    if (child.isFile()){
+                    if (child.isFile()) {
                         inputStreams.add(getInputStreamFromFile(child));
                     }
                 }
-            }  else {
+            } else {
                 inputStreams.add(getInputStreamFromFile(dbxEntry));
             }
 
-        } catch (DbxException ex){
+        } catch (DbxException ex) {
             throw new RuntimeException(ex);
         }
 
@@ -103,15 +91,15 @@ public class DropBoxResourceOpener implements ResourceAccessor,ResourceOpenerUpl
     }
 
     private InputStream getInputStreamFromFile(DbxEntry file) throws IOException, DbxException {
-        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
-         try{
-             DbxEntry.File downloadedFile = client.getFile(file.path, null,
-                     byteArrayOutputStream);
-             System.out.println("Metadata: " + downloadedFile.toString());
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            DbxEntry.File downloadedFile = client.getFile(file.path, null,
+                    byteArrayOutputStream);
+            System.out.println("Metadata: " + downloadedFile.toString());
             return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-         } finally {
-             byteArrayOutputStream.close();
-         }
+        } finally {
+            byteArrayOutputStream.close();
+        }
 
     }
 
@@ -120,24 +108,24 @@ public class DropBoxResourceOpener implements ResourceAccessor,ResourceOpenerUpl
         if (!StringUtils.startsWith(path, "/")) {
             path = "/" + path;
         }
-        if (client==null){
+        if (client == null) {
             throw new IllegalAccessError("DropBoxResourceOpener must be init first");
         }
-        Set<String> list=new HashSet<>() ;
-        try{
-            DbxEntry dbxEntry=client.getMetadata(path);
-            if (client.getMetadata(path).isFolder()){
+        Set<String> list = new HashSet<>();
+        try {
+            DbxEntry dbxEntry = client.getMetadata(path);
+            if (client.getMetadata(path).isFolder()) {
                 DbxEntry.WithChildren listing = client.getMetadataWithChildren(path);
                 for (DbxEntry child : listing.children) {
-                    if (child.isFile()){
+                    if (child.isFile()) {
                         list.add(child.path);
                     }
                 }
             } else {
-              list.add(dbxEntry.path);
+                list.add(dbxEntry.path);
             }
 
-        } catch (DbxException ex){
+        } catch (DbxException ex) {
             throw new RuntimeException(ex);
         }
         return list;
@@ -151,11 +139,13 @@ public class DropBoxResourceOpener implements ResourceAccessor,ResourceOpenerUpl
 
     @Override
     public void upload(String fileName, InputStream inputStream) throws UploadException {
-        try{
+        try {
             DbxEntry.File uploadedFile = client.uploadFile(fileName,
                     DbxWriteMode.add(), -1, inputStream);
             System.out.println("Uploaded: " + uploadedFile.toString());
-        } catch (Exception ex){
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception ex) {
             throw new UploadException(ex);
         }
 
@@ -164,17 +154,17 @@ public class DropBoxResourceOpener implements ResourceAccessor,ResourceOpenerUpl
     @Override
     public void clearAll(String path) throws ClearException {
         if (!StringUtils.startsWith(path, "/")) {
-        path = "/" + path;
+            path = "/" + path;
         }
-        try{
+        try {
             DbxEntry.WithChildren listing = client.getMetadataWithChildren(path);
             for (DbxEntry child : listing.children) {
-                if (child.isFile()){
+                if (child.isFile()) {
                     client.delete(child.path);
                 }
             }
         } catch (Exception ex) {
-          throw new ClearException(ex);
+            throw new ClearException(ex);
         }
 
 

@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>vassio.od.ua</groupId>
+        <groupId>ua.od.vassio</groupId>
         <artifactId>service</artifactId>
         <version>2.0-snapshot</version>
     </parent>
 
-    <groupId>vassio.od.ua</groupId>
+    <groupId>ua.od.vassio</groupId>
     <artifactId>backup-base</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>

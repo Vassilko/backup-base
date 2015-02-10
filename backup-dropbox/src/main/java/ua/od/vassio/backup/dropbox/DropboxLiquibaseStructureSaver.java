@@ -19,32 +19,32 @@ import java.util.Date;
  * Created by vzakharchenko on 01.08.14.
  */
 public class DropboxLiquibaseStructureSaver extends LiquibaseStructureSaver {
-    private static Logger logger= LoggerFactory.getLogger(DropboxLiquibaseStructureSaver.class);
-    private String defaultPath="/";
+    private static Logger logger = LoggerFactory.getLogger(DropboxLiquibaseStructureSaver.class);
+    private String defaultPath = "/";
 
-    private String prefix="DropBox_";
+    private String prefix = "DropBox_";
 
-    private String app_key ;
-    private String app_secret;
-    private String app_name;
-    private String accessToken;
+//    private String app_key;
+//    private String app_secret;
+//    private String app_name;
+//    private String accessToken;
     private DropBoxResourceOpener dropBoxResourceOpener;
-    private static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("ddMMYYYY_HHmmss");
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMYYYY_HHmmss");
 
-    public DropboxLiquibaseStructureSaver(Connection connection, String app_key, String app_secret, String app_name, String accessToken) throws DBException {
-        super(connection);
-        this.app_key = app_key;
-        this.app_secret = app_secret;
-        this.app_name = app_name;
-        this.accessToken = accessToken;
-        this.dropBoxResourceOpener=new DropBoxResourceOpener(app_name,app_key,app_secret,accessToken);
-    }
+//    public DropboxLiquibaseStructureSaver(Connection connection, String app_key, String app_secret, String app_name, String accessToken) throws DBException {
+//        super(connection);
+//        this.app_key = app_key;
+//        this.app_secret = app_secret;
+//        this.app_name = app_name;
+//        this.accessToken = accessToken;
+//        this.dropBoxResourceOpener = new DropBoxResourceOpener(app_name, app_key, app_secret, accessToken);
+//    }
 
     public DropboxLiquibaseStructureSaver(Connection connection, String app_name, String accessToken) throws DBException {
         super(connection);
-        this.app_name = app_name;
-        this.accessToken = accessToken;
-        this.dropBoxResourceOpener=new DropBoxResourceOpener(app_name,accessToken);
+//        this.app_name = app_name;
+//        this.accessToken = accessToken;
+        this.dropBoxResourceOpener = new DropBoxResourceOpener(app_name, accessToken);
     }
 
     @Override
@@ -65,16 +65,16 @@ public class DropboxLiquibaseStructureSaver extends LiquibaseStructureSaver {
 
     @Override
     public String upload(ByteArrayOutputStream outputStream) throws UploadException {
-        InputStream inputStream=new ByteArrayInputStream(outputStream.toByteArray());
-        String fileName=generateFileName();
-        dropBoxResourceOpener.upload(pathToChangeSets()+fileName,inputStream);
-        logger.info("upload "+fileName+ " Success");
+        InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+        String fileName = generateFileName();
+        dropBoxResourceOpener.upload(pathToChangeSets() + fileName, inputStream);
+        logger.info("upload " + fileName + " Success");
         return fileName;
     }
 
-    private String generateFileName(){
+    private String generateFileName() {
         try {
-            return  getIdPrefix()+workDatabase.getCatalog()+"_"+simpleDateFormat.format(new Date())+".xml";
+            return getIdPrefix() + workDatabase.getCatalog() + "_" + simpleDateFormat.format(new Date()) + ".xml";
         } catch (DBException e) {
             throw new RuntimeException(e);
         }

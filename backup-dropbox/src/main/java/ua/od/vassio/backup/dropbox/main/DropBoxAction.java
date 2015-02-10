@@ -9,10 +9,10 @@ import java.util.Objects;
  * Time: 15:58
  */
 public enum DropBoxAction {
-    SAVE("save","save data to dropbox"),
-    UPDATE("update","update database"),
-    DROP("drop","dropAll objects in database"),
-    CLEAR("clear","clear all ChangeSets");
+    SAVE("save", "save data to dropbox"),
+    UPDATE("update", "update database"),
+    DROP("drop", "dropAll objects in database"),
+    CLEAR("clear", "clear all ChangeSets");
 
     private String internalName;
     private String description;
@@ -30,20 +30,20 @@ public enum DropBoxAction {
         return description;
     }
 
-    public static  String getDescriptions(){
-        String ret="";
-        for (DropBoxAction dropBoxAction:DropBoxAction.values()){
-           ret+=dropBoxAction.getInternalName()+":  "+dropBoxAction.getDescription()+"\n";
+    public static String getDescriptions() {
+        StringBuilder ret = new StringBuilder("");
+        for (DropBoxAction dropBoxAction : DropBoxAction.values()) {
+            ret.append(dropBoxAction.getInternalName() + ":  " + dropBoxAction.getDescription() + "\n");
         }
-        return ret;
+        return ret.toString();
     }
 
-    public static DropBoxAction getValue(String text){
+    public static DropBoxAction getValue(String text) {
         for (DropBoxAction dropBoxAction : values()) {
-            if (Objects.equals(dropBoxAction.name(),text)){
+            if (Objects.equals(dropBoxAction.name(), text)) {
                 return dropBoxAction;
             }
-            if (Objects.equals(dropBoxAction.getInternalName(),text)){
+            if (Objects.equals(dropBoxAction.getInternalName(), text)) {
                 return dropBoxAction;
             }
         }

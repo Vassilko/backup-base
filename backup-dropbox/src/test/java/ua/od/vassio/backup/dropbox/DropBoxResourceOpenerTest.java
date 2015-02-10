@@ -16,12 +16,10 @@ import static org.testng.Assert.assertNotNull;
  */
 public class DropBoxResourceOpenerTest {
 
-    public static final String APP_KEY = "kuebk1pz38bbg75";
-    public static final String APP_SECRET = "dp3u216fym0wsgz";
-    public static final String ACCESS_TOKEN ="EtOGckaNVbQAAAAAAAAAvAA7cf8x-3aWvhIJO-IHeIA9Xu49pR4tliFrwxBnAJue";
-    public static final String APP_NAME="backup-base-test2";
+    public static final String ACCESS_TOKEN = "EtOGckaNVbQAAAAAAAAAvAA7cf8x-3aWvhIJO-IHeIA9Xu49pR4tliFrwxBnAJue";
+    public static final String APP_NAME = "backup-base-test2";
 
-    private DropBoxResourceOpener dropBoxResourceOpener = new DropBoxResourceOpener(APP_NAME,APP_KEY,APP_SECRET,ACCESS_TOKEN);
+    private DropBoxResourceOpener dropBoxResourceOpener = new DropBoxResourceOpener(APP_NAME, ACCESS_TOKEN);
 
     @Test(enabled = false)
     public void testReadFile() throws IOException {

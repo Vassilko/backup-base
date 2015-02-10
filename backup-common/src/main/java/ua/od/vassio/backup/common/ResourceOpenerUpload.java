@@ -11,5 +11,5 @@ import java.io.InputStream;
  * Time: 12:46
  */
 public interface ResourceOpenerUpload {
-    public void upload(String fileName,InputStream inputStream) throws UploadException;
+    public void upload(String fileName, InputStream inputStream) throws UploadException;
 }

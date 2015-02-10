@@ -10,7 +10,8 @@ import ua.od.vassio.backup.common.exception.UpdateException;
  */
 public interface StructureSaver {
     /**
-     *  Save changeSet
+     * Save changeSet
+     *
      * @return filename
      * @throws DBException
      */
@@ -18,12 +19,14 @@ public interface StructureSaver {
 
     /**
      * Clear all changeSets
+     *
      * @throws ClearException
      */
     public void clear() throws ClearException;
 
     /**
      * update using file or path
+     *
      * @param fileName
      * @throws UpdateException
      */
