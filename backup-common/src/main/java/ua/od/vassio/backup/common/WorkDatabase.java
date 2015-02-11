@@ -9,22 +9,22 @@ public interface WorkDatabase<DATABASE> {
     /**
      * get Current Database from DataSource. Use cache for resolve
      */
-    public DATABASE getCurrentDatabase() throws DBException;
+    public DATABASE getCurrentDatabase() throws DBException;   //NOPMD
 
     /**
      * get Default Schema Name
      *
      * @return
      */
-    public String getSchema() throws DBException;
+    public String getSchema() throws DBException;   //NOPMD
 
     /**
      * get Default Catalog Name
      *
      * @return
      */
-    public String getCatalog() throws DBException;
+    public String getCatalog() throws DBException;  //NOPMD
 
-    public int getMaxConstraintLength();
+    public int getMaxConstraintLength();  //NOPMD
 
 }

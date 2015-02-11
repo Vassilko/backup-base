@@ -9,7 +9,7 @@ import java.util.Comparator;
 /**
  * Created by vzakharchenko on 01.08.14.
  */
-public interface DatabaseChangeLogReader {
+public interface DatabaseChangeLogReader {//NOPMD
     /**
      * read all ChangeLog xml to databaseChangeLog
      *
@@ -19,5 +19,5 @@ public interface DatabaseChangeLogReader {
      * @throws java.io.IOException
      * @throws liquibase.exception.LiquibaseException
      */
-    public void read(DatabaseChangeLog databaseChangeLog, String path, Comparator<String> comporator) throws IOException, LiquibaseException;
+    public void read(DatabaseChangeLog databaseChangeLog, String path, Comparator<String> comporator) throws IOException, LiquibaseException;//NOPMD
 }

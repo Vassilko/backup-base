@@ -78,8 +78,6 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
         return databaseChangeLog;
     }
 
-    ;
-
     protected abstract String pathToChangeSets();
 
     protected Set<Class<? extends DatabaseObject>> getCompareTypes() {
@@ -158,6 +156,8 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
             new XMLChangeLogSerializer().write(changeSets, outputStream);
             outputStream.flush();
             return upload(outputStream);
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

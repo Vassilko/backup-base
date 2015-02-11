@@ -8,6 +8,6 @@ import ua.od.vassio.backup.common.exception.ClearException;
  * Date: 02.08.14
  * Time: 13:15
  */
-public interface ResourceOpenerClear {
-    public void clearAll(String path) throws ClearException;
+public interface ResourceOpenerClear { //NOPMD
+    public void clearAll(String path) throws ClearException; //NOPMD
 }

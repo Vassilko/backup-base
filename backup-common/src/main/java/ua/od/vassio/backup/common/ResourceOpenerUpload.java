@@ -10,6 +10,6 @@ import java.io.InputStream;
  * Date: 02.08.14
  * Time: 12:46
  */
-public interface ResourceOpenerUpload {
-    public void upload(String fileName, InputStream inputStream) throws UploadException;
+public interface ResourceOpenerUpload {  //NOPMD
+    public void upload(String fileName, InputStream inputStream) throws UploadException; //NOPMD
 }

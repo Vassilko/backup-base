@@ -51,12 +51,10 @@ public class DropboxMain {
             formatter.printHelp(DropboxMain.class.getSimpleName(), ArgumentsHelper.buildOptions(DropboxArgumentAction.class));
             throw new IllegalArgumentException("Action is empty");
         }
-        if (dropBoxAction == DropBoxAction.UPDATE) {
-            if (StringUtils.isEmpty(fileName)) {
+        if (dropBoxAction == DropBoxAction.UPDATE && StringUtils.isEmpty(fileName)) {
                 HelpFormatter formatter = new HelpFormatter();
                 formatter.printHelp(DropboxMain.class.getSimpleName(), ArgumentsHelper.buildOptions(DropboxArgumentAction.class));
                 throw new IllegalArgumentException("fileName is empty");
-            }
         }
         if (StringUtils.isEmpty(appName)) {
             logger.warn("Applicatioon Name is Empty use " + APP_NAME);
