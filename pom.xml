@@ -15,12 +15,6 @@
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
-    <properties>
-        <liquibase>3.3.2</liquibase>
-        <dropbox>1.7.6</dropbox>
-        <maven-assembly-plugin>2.4</maven-assembly-plugin>
-        <sqlite>3.7.2</sqlite>
-    </properties>
 
     <modules>
         <module>backup-common</module>
@@ -40,17 +34,14 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-            <version>${commons-collections}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${commons-io}</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
