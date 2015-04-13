@@ -10,7 +10,6 @@
         <version>2.0-snapshot</version>
     </parent>
 
-    <groupId>ua.od.vassio</groupId>
     <artifactId>backup-base</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
@@ -21,6 +20,7 @@
         <module>backup-liquibase</module>
         <module>backup-dropbox</module>
         <module>backup-execute</module>
+        <module>backup-spring</module>
     </modules>
 
     <repositories>

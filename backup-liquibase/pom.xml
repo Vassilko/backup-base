@@ -9,7 +9,6 @@
         <version>1.0.0</version>
     </parent>
 
-    <groupId>ua.od.vassio</groupId>
     <artifactId>backup-liquibase</artifactId>
     <version>${parent.version}</version>
 

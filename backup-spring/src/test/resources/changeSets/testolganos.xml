@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+    <changeSet author="vassio(generate)" context="production" id="test-1">
+        <createTable tableName="HD44780TwoButtons">
+            <column name="lcd_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lcd_buttonEnter" type="INT"/>
+            <column name="lcd_buttonMenu" type="INT"/>
+            <column name="lcd_dbPin4" type="INT"/>
+            <column name="lcd_dbPin5" type="INT"/>
+            <column name="lcd_dbPin6" type="INT"/>
+            <column name="lcd_dbPin7" type="INT"/>
+            <column name="lcd_enablePin" type="INT"/>
+            <column name="lcd_name" type="VARCHAR(255)"/>
+            <column name="lcd_rsPin" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-2">
+        <createTable tableName="LCDWidget">
+            <column name="widget_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="widget_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-3">
+        <createTable tableName="LcdTreeInstance_MenuAndEnter">
+            <column name="tree_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-4">
+        <createTable tableName="WidgetPreference">
+            <column name="preference_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="preference_key" type="VARCHAR(255)"/>
+            <column name="preference_value" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-5">
+        <createTable tableName="extender">
+            <column name="extender_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="extender_device" type="INT"/>
+            <column name="extender_gpio" type="INT"/>
+            <column name="extender_i2c" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-6">
+        <createTable tableName="join_extender_hd44780">
+            <column defaultValue="" name="lcd_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="extender_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-7">
+        <createTable tableName="join_temp_zone">
+            <column defaultValue="" name="uid" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="zone_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-8">
+        <createTable tableName="join_tree_hd44780">
+            <column defaultValue="" name="lcd_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-9">
+        <createTable tableName="join_tree_lcdWidget">
+            <column defaultValue="" name="widget_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-10">
+        <createTable tableName="join_tree_next">
+            <column name="tree_next" type="VARCHAR(255)"/>
+            <column name="tree_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-11">
+        <createTable tableName="join_tree_preference">
+            <column defaultValue="" name="preference_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tree_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-12">
+        <createTable tableName="join_value_temp">
+            <column defaultValue="" name="id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uid" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-13">
+        <createTable tableName="temperature">
+            <column name="uid" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-14">
+        <createTable tableName="temperatureData">
+            <column name="id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dateAdd" type="BIGINT"/>
+            <column name="value" type="DOUBLE(22)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-15">
+        <createTable tableName="zones">
+            <column name="zone_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="friendlyName" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-16">
+        <addPrimaryKey columnNames="lcd_id" constraintName="PRIMARY_1" tableName="HD44780TwoButtons"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-17">
+        <addPrimaryKey columnNames="widget_id" constraintName="PRIMARY_2" tableName="LCDWidget"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-18">
+        <addPrimaryKey columnNames="tree_id" constraintName="PRIMARY_3" tableName="LcdTreeInstance_MenuAndEnter"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-19">
+        <addPrimaryKey columnNames="preference_id" constraintName="PRIMARY_4" tableName="WidgetPreference"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-20">
+        <addPrimaryKey columnNames="extender_id" constraintName="PRIMARY_5" tableName="extender"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-21">
+        <addPrimaryKey columnNames="lcd_id, extender_id" constraintName="PRIMARY_6" tableName="join_extender_hd44780"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-22">
+        <addPrimaryKey columnNames="uid, zone_name" constraintName="PRIMARY_7" tableName="join_temp_zone"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-23">
+        <addPrimaryKey columnNames="lcd_id, tree_id" constraintName="PRIMARY_8" tableName="join_tree_hd44780"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-24">
+        <addPrimaryKey columnNames="widget_id, tree_id" constraintName="PRIMARY_9" tableName="join_tree_lcdWidget"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-25">
+        <addPrimaryKey columnNames="tree_id" constraintName="PRIMARY_10" tableName="join_tree_next"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-26">
+        <addPrimaryKey columnNames="preference_id, tree_id" constraintName="PRIMARY_11" tableName="join_tree_preference"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-27">
+        <addPrimaryKey columnNames="id, uid" constraintName="PRIMARY_12" tableName="join_value_temp"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-28">
+        <addPrimaryKey columnNames="uid" constraintName="PRIMARY_13" tableName="temperature"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-29">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY_14" tableName="temperatureData"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-30">
+        <addPrimaryKey columnNames="zone_name" constraintName="PRIMARY_15" tableName="zones"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-31">
+        <addUniqueConstraint columnNames="tree_id" constraintName="UK_1uf52yj2cmd2r6082eyx12oew" deferrable="false" disabled="false" initiallyDeferred="false" tableName="join_tree_hd44780"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-32">
+        <addUniqueConstraint columnNames="lcd_rsPin, lcd_enablePin, lcd_dbPin4, lcd_dbPin5, lcd_dbPin6, lcd_dbPin7" constraintName="UK_54d69lixu78msmhkdx0f62iny" deferrable="false" disabled="false" initiallyDeferred="false" tableName="HD44780TwoButtons"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-33">
+        <addUniqueConstraint columnNames="uid" constraintName="UK_6upchttd276k3rwkk3wy7b9pd" deferrable="false" disabled="false" initiallyDeferred="false" tableName="join_value_temp"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-34">
+        <addUniqueConstraint columnNames="tree_id" constraintName="UK_bt2cn0xw2lnshoglr8b6tfsl7" deferrable="false" disabled="false" initiallyDeferred="false" tableName="join_tree_preference"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-35">
+        <addUniqueConstraint columnNames="extender_i2c, extender_device" constraintName="UK_gm5uc11kt5jn0ohp6magw5fkk" deferrable="false" disabled="false" initiallyDeferred="false" tableName="extender"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-36">
+        <addUniqueConstraint columnNames="extender_id" constraintName="UK_h14jjb37vrovqs8ri3oy7d1pi" deferrable="false" disabled="false" initiallyDeferred="false" tableName="join_extender_hd44780"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-37">
+        <addUniqueConstraint columnNames="tree_id" constraintName="UK_ior2qoptwakqfetrxoxgkqcp4" deferrable="false" disabled="false" initiallyDeferred="false" tableName="join_tree_lcdWidget"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-38">
+        <addUniqueConstraint columnNames="widget_name" constraintName="UK_msu428deye917rup0kfqh3eqe" deferrable="false" disabled="false" initiallyDeferred="false" tableName="LCDWidget"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-39">
+        <addUniqueConstraint columnNames="zone_name" constraintName="UK_n6pmrpf2p9ekb35ljetjcg6q" deferrable="false" disabled="false" initiallyDeferred="false" tableName="join_temp_zone"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-40">
+        <addUniqueConstraint columnNames="lcd_name" constraintName="UK_n7pktyq0x0g10bmsqcno7a0p0" deferrable="false" disabled="false" initiallyDeferred="false" tableName="HD44780TwoButtons"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-41">
+        <addForeignKeyConstraint baseColumnNames="tree_id" baseTableName="join_tree_hd44780" constraintName="FK_1uf52yj2cmd2r6082eyx12oew" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="tree_id" referencedTableName="LcdTreeInstance_MenuAndEnter"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-42">
+        <addForeignKeyConstraint baseColumnNames="tree_next" baseTableName="join_tree_next" constraintName="FK_3yf9yuqjhcm98lm4co9dt8bf5" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="tree_id" referencedTableName="LcdTreeInstance_MenuAndEnter"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-43">
+        <addForeignKeyConstraint baseColumnNames="uid" baseTableName="join_value_temp" constraintName="FK_6upchttd276k3rwkk3wy7b9pd" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="temperatureData"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-44">
+        <addForeignKeyConstraint baseColumnNames="preference_id" baseTableName="join_tree_preference" constraintName="FK_7783neeveu5p4pm467m52ig1p" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="tree_id" referencedTableName="LcdTreeInstance_MenuAndEnter"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-45">
+        <addForeignKeyConstraint baseColumnNames="uid" baseTableName="join_temp_zone" constraintName="FK_7oc87nl861qwu4smuhqtrxj1r" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="zone_name" referencedTableName="zones"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-46">
+        <addForeignKeyConstraint baseColumnNames="tree_id" baseTableName="join_tree_preference" constraintName="FK_bt2cn0xw2lnshoglr8b6tfsl7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="preference_id" referencedTableName="WidgetPreference"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-47">
+        <addForeignKeyConstraint baseColumnNames="extender_id" baseTableName="join_extender_hd44780" constraintName="FK_h14jjb37vrovqs8ri3oy7d1pi" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="lcd_id" referencedTableName="HD44780TwoButtons"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-48">
+        <addForeignKeyConstraint baseColumnNames="tree_id" baseTableName="join_tree_lcdWidget" constraintName="FK_ior2qoptwakqfetrxoxgkqcp4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="tree_id" referencedTableName="LcdTreeInstance_MenuAndEnter"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-49">
+        <addForeignKeyConstraint baseColumnNames="id" baseTableName="join_value_temp" constraintName="FK_jen3al977k471f3gpfl9y870y" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="uid" referencedTableName="temperature"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-50">
+        <addForeignKeyConstraint baseColumnNames="lcd_id" baseTableName="join_tree_hd44780" constraintName="FK_k3osp14e3tntl51m8h4hi3cew" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="lcd_id" referencedTableName="HD44780TwoButtons"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-51">
+        <addForeignKeyConstraint baseColumnNames="zone_name" baseTableName="join_temp_zone" constraintName="FK_n6pmrpf2p9ekb35ljetjcg6q" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="uid" referencedTableName="temperature"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-52">
+        <addForeignKeyConstraint baseColumnNames="widget_id" baseTableName="join_tree_lcdWidget" constraintName="FK_qmgh9b08ebjirqkr1m8peqx8o" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="widget_id" referencedTableName="LCDWidget"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-53">
+        <addForeignKeyConstraint baseColumnNames="tree_id" baseTableName="join_tree_next" constraintName="FK_rycjxx1bvat03fjnrglw6sqy3" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="tree_id" referencedTableName="LcdTreeInstance_MenuAndEnter"/>
+    </changeSet>
+    <changeSet author="vassio(generate)" context="production" id="test-54">
+        <addForeignKeyConstraint baseColumnNames="lcd_id" baseTableName="join_extender_hd44780" constraintName="FK_s8lj0jcm1pmxju3vylocyx5a3" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="extender_id" referencedTableName="extender"/>
+    </changeSet>
+</databaseChangeLog>

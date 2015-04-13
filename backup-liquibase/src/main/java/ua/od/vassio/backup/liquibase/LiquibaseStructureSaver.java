@@ -40,12 +40,16 @@ import java.util.Set;
  */
 public abstract class LiquibaseStructureSaver implements StructureSaver {
     private static Logger logger = LoggerFactory.getLogger(LiquibaseStructureSaver.class);
-    protected final static String CONTEXT_NAME = null;
+    protected final static String CONTEXT_NAME = "production";
     protected final static String AUTHOR_NAME = System.getProperty("user.name") + "(generate)";
 
     protected WorkDatabase<Database> workDatabase;
     protected Liquibase liquibase;
     protected DatabaseChangeLogReader changeLogReader;
+    private boolean compareData =true;
+
+    public LiquibaseStructureSaver() {
+    }
 
     public LiquibaseStructureSaver(Connection connection) throws DBException {
         workDatabase = new LiquibaseWorkDatabaseImpl(connection);
@@ -90,7 +94,9 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
         compareTypes.add(StoredProcedure.class);
         compareTypes.add(UniqueConstraint.class);
         compareTypes.add(Index.class);
-        compareTypes.add(Data.class);
+        if (compareData){
+            compareTypes.add(Data.class);
+        }
         return compareTypes;
     }
 
@@ -100,7 +106,7 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
 
 
     protected DiffOutputControl getDiffOutputControl() {
-        return new DiffOutputControl(false, true, true);
+        return new DiffOutputControl(false, false, false);
     }
 
     protected DiffToChangeLog getFullDiff() throws DBException {
@@ -186,5 +192,13 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
         } catch (Exception e) {
             throw new DropAllException(e);
         }
+    }
+
+    public void setWorkDatabase(WorkDatabase<Database> workDatabase) {
+        this.workDatabase = workDatabase;
+    }
+
+    public void setCompareData(boolean compareData) {
+        this.compareData = compareData;
     }
 }
