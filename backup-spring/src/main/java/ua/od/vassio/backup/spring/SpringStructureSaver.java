@@ -61,7 +61,7 @@ public class SpringStructureSaver extends LiquibaseStructureSaver {
         }
     }
 
-    private String generateFileName() {
+    protected String generateFileName() {
         try {
             return getIdPrefix() + workDatabase.getCatalog() + ".xml";
         } catch (DBException e) {
