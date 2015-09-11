@@ -17,6 +17,7 @@ import liquibase.snapshot.SnapshotGeneratorFactory;
 import liquibase.structure.DatabaseObject;
 import liquibase.structure.core.*;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ import ua.od.vassio.backup.common.exception.UploadException;
 import ua.od.vassio.backup.liquibase.database.LiquibaseWorkDatabaseImpl;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.HashSet;
@@ -67,7 +69,8 @@ public abstract class LiquibaseStructureSaver implements StructureSaver {
             logger.info("read " + fileName);
             databaseChangeLog.getChangeSets().clear();
             databaseChangeLog.getPreconditions().getNestedPreconditions().clear();
-            changeLogReader.read(databaseChangeLog, pathToChangeSets() + fileName, new StringComparator());
+            String path = pathToChangeSets() + (StringUtils.endsWith(pathToChangeSets(), File.separator)?"":File.separator) + fileName;
+            changeLogReader.read(databaseChangeLog, path, new StringComparator());
             updateChangeSets(databaseChangeLog.getChangeSets());
         } catch (RuntimeException e) {
             throw e;
